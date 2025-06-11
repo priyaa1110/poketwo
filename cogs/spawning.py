@@ -296,6 +296,13 @@ if user_id in data and "quest" in data[user_id]:
         if quest["progress"] == quest["count"]:
             await ctx.send("🎉 You completed your daily quest! +100 coins awarded!")
         save_data(data)
+                # Award coins
+            COIN_REWARD = 100
+            if "coins" not in data[user_id]:
+                data[user_id]["coins"] = 0
+            data[user_id]["coins"] += COIN_REWARD
+            save_data(data)
+            await ctx.send(f"{ctx.author.mention} has been awarded {COIN_REWARD} coins! 🎉")
 
         # Retrieve correct species and level from tracker
 
