@@ -285,6 +285,17 @@ class Spawning(commands.Cog):
     @commands.command(aliases=("c",))
     async def catch(self, ctx, *, guess: str):
         """Catch a wild pokémon."""
+        from data.players import load_data, save_data
+user_id = str(ctx.author.id)
+data = load_data()
+
+if user_id in data and "quest" in data[user_id]:
+    quest = data[user_id]["quest"]
+    if quest["type"] == "catch" and quest["progress"] < quest["count"]:
+        quest["progress"] += 1
+        if quest["progress"] == quest["count"]:
+            await ctx.send("🎉 You completed your daily quest! +100 coins awarded!")
+        save_data(data)
 
         # Retrieve correct species and level from tracker
 
